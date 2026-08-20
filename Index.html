@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NotiWeb4T - En Vivo</title>
+<style>
+body{margin:0;background:#111;color:#fff;font-family:Arial}
+.header{background:#8B0000;padding:12px;text-align:center;font-weight:bold;font-size:20px}
+.live-wrap{background:#000;padding:10px}
+.live-wrap iframe{width:100%;height:52vw;max-height:420px;border:none}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px}
+.card{background:#222;border-radius:8px;padding:10px;text-align:center}
+.card a{color:#fff;text-decoration:none}
+.badge{background:red;color:#fff;padding:2px 6px;border-radius:4px;font-size:12px}
+</style>
+</head>
+<body>
+<div class="header">🔴 NotiWeb4T - TV Abierta 4T En Vivo</div>
+
+<div class="live-wrap">
+  <span class="badge">EN VIVO</span> Canal Principal
+  <iframe src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1" allowfullscreen></iframe>
+  <p>Si no carga, es el noticiero de La Mañanera en vivo oficial.</p>
+</div>
+
+<div class="grid">
+  <div class="card"><a href="https://www.youtube.com/@OnceNoticias/live" target="_blank">📺 Once Noticias</a></div>
+  <div class="card"><a href="https://www.youtube.com/@Canal22Mexico/live" target="_blank">📺 Canal 22</a></div>
+  <div class="card"><a href="https://www.youtube.com/@CanaldelCongresoMexico/live" target="_blank">📺 Canal Congreso</a></div>
+  <div class="card"><a href="https://www.youtube.com/@SPRInforma/live" target="_blank">📺 SPR Informa</a></div>
+</div>
+
+<div style="padding:15px;background:#222;margin:10px;border-radius:8px">
+  <h3>Noticias 4T - Hoy</h3>
+  <div id="news">Cargando noticias...</div>
+</div>
+
+<script>
+// RSS simple de noticias para que nunca se vea vacío
+fetch('https://api.rss2json.com/v1/api.json?rss_url=https://www.jornada.com.mx/rss/edicion.xml')
+.then(r=>r.json()).then(d=>{
+  let html='';
+  d.items.slice(0,5).forEach(n=>{ html+=`<p>• <a href="${n.link}" target="_blank" style="color:#fff">${n.title}</a></p>` })
+  document.getElementById('news').innerHTML=html;
+})
+</script>
+</body>
+</html>
